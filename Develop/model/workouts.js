@@ -21,7 +21,17 @@ const WorkoutSchema = new Schema({
         },
         duration: {
             type: Number, 
+        },
+        weight: {
+          type: Number,
+        },
+        reps: {
+          type: Number,
+        },
+        sets: {
+          type: Number,
         }
+
     }
   ]
 });
