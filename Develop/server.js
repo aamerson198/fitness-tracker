@@ -32,6 +32,7 @@ connection.on("error", (err) => {
 // routes
 
 app.use(require("./controller/routes.js"));
+app.use(require("./controller/html-routes.js"));
 
 // 4. Listen on the PORT.
 app.listen(PORT, () => {
