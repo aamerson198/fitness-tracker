@@ -3,10 +3,13 @@ const router = express.Router();
 const Workout = require("../models");
 
 router.get("/api/workouts", (req, res) => {
-  Workout.find().then((dbWorkout) => {
-    res.json(dbWorkout);
-  });
-});
+
+  Workout.find().then(foundWorkout => {
+
+    res.json(foundWorkout);
+    console.log(foundWorkout);
+  })
+})
 
 
 // router.get("/api/donuts", (req, res) => {
@@ -14,14 +17,14 @@ router.get("/api/workouts", (req, res) => {
 //     res.json(foundDonuts);
 //   });
 // });
-router.post("/api/workouts", function (req, res) {
-  Workout.create(req.body)
-    .then(dbWorkout =>
-      res.json(dbWorkout))
-    .catch(err => {
-      res.json(err);
-    });
-});
+// router.post("/api/workouts", function (req, res) {
+//   Workout.create(req.body)
+//     .then(dbWorkout =>
+//       res.json(dbWorkout))
+//     .catch(err => {
+//       res.json(err);
+//     });
+// });
 
 // router.get("/api/config", (req, res) => {
 //   res.json({
