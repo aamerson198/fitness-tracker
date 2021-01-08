@@ -1,36 +1,46 @@
 const express = require("express");
-const router = express.Router();
+// const router = express.Router();
 const db = require("../models");
 
-router.get("/api/workouts", (req, res) => {
+module.exports = (app) => {
 
-  db.Workout.find().then(foundWorkout => {
+  app.get("/api/workouts", (req, res) => {
 
-    res.json(foundWorkout);
-    console.log(foundWorkout);
+    db.Workout.find().then(foundWorkout => {
+
+      res.json(foundWorkout);
+      console.log(foundWorkout);
+    })
   })
-})
 
-router.post("/api/workouts", function (req, res) {
-  db.Workout.create(req.body)
-    .then(dbWorkout =>
-      res.json(dbWorkout))
-    .catch(err => {
-      res.json(err);
-    });
-});
+  app.post('/api/workouts', ({body}, res) => {
+    console.log ("request /api/workouts: ", body);
+    db.Workout.create(body)
+        .then(dbWorkout => {
+            console.log("new workout has been created: ", dbWorkout)
+            res.json(dbWorkout);
+        })
+        .catch(({message}) => {
+            console.log("error port/api/workouts", message);
+        });
+ });
 
-router.get("/api/config", (req, res) => {
-  res.json({
-    success: true,
+  app.put('/api/workouts/:id', (req, res) => {
+    db.Workout.findByIdAndUpdate(
+      { _id: req.params.id },
+      { $push: { exercises: req.body } },
+      function (err, result) {
+        if (err) {
+          console.log("Error: ", err);
+          res.send(err);
+        } else {
+          console.log("Updated dbWorkout: ", result);
+          res.send(result);
+        }
+      }
+    );
   });
-});
-
-router.get("/api/workouts", (req, res) => {
-  db.Workouts.find().then((foundWorkouts) => {
-    res.json(foundWorkouts);
-  });
-});
+};
 
 // router.get("/api/donuts/:id", (req, res) => {
 //   db.Donut.findById(req.params.id).then((foundDonut) => {
@@ -57,4 +67,4 @@ router.get("/api/workouts", (req, res) => {
 //     res.json(result);
 //   });
 // });
-module.exports = router
+// module.exports = router

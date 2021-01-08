@@ -12,6 +12,8 @@ const db = require("./models");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(express.static('public'));
+
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -36,5 +38,5 @@ app.use(require("./controller/html-routes.js"));
 
 // 4. Listen on the PORT.
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`App running on port ${PORT}`);
 });
