@@ -10,17 +10,13 @@ This is an application built by Drew Amerson.
 
 ## Table of Contents
 
+- [Description](#description)
 - [Usage](#usage)
-- [Credits](#credits)
 - [Contact](#contact)
 
 ## Usage
 
 In order to use this app you must follow the prompts from the landing page and begin putting in your workput info once a workout is completed. .
-
-## Credit
-
-Special credit in the building of this application goes to N/A.
 
 ## Contact
 
