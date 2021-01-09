@@ -1,42 +1,30 @@
-const express = require("express");
+const express = require('express');
+const mongoose = require('mongoose');
+const Workout = require("./models/workouts");
+const logger = require("morgan");
 const path = require("path");
-const mongoose = require("mongoose");
-// 2. Create an instance of Express
-const app = express();
-// 3. Set the PORT
+
 const PORT = process.env.PORT || 8080;
 
-const db = require("./models");
 
-// 5. Add middleware
+
+const app = express();
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static('public'));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/workout', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
   useCreateIndex: true,
 });
 
-const connection = mongoose.connection;
+require('./routes/api-routes')(app);
+require('./routes/html-routes')(app);
 
-connection.on("connected", () => {
-  console.log("Mongoose connected successfully.");
-});
-
-connection.on("error", (err) => {
-  console.log("Mongoose connection error: " + err);
-});
-
-// routes
-
-app.use(require("./controller/routes.js"));
-app.use(require("./controller/html-routes.js"));
-
-// 4. Listen on the PORT.
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);
 });
